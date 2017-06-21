@@ -18,7 +18,7 @@ router.get('/', function(req, res, next) {
 
 router.post('/insert', function(req, res, next){
 	
-	//req.check('email', 'Invalid email address').isEmail();
+	req.check('email', 'Invalid email address').isEmail();
 	req.check('password','password is invalid').equals(req.body.confirm_password);
 
 	var errors = req.validationErrors();
