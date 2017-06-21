@@ -12,6 +12,8 @@
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.3",
     "express": "~4.15.2",
+    "express-session": "^1.15.3",
+    "express-validator": "^3.2.0",
     "jade": "~1.11.0",
     "kerberos": "~0.0.17",
     "mongo": "^0.1.0",
