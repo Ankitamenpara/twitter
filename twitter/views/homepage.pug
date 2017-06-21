@@ -13,7 +13,7 @@ html(lang = en)
 			//script(src="js/bootstrap.min.js")
 			script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js")
 			
-			
+
 		body(background = "/images/background.jpg" repeat = "no-repeat")
 			nav.navbar.navbar-default
 				.container-fluid 
@@ -53,15 +53,24 @@ html(lang = en)
 										.form-group
 											input.form-control.input-sm(type= "password" name = "password" placeholder = "Password" required)
 
-										.input.btn.btn-info.btn-block(type = "submit" value = "Register") Sign In 
+										button.btn.btn-info.btn-block(type = "submit" value = "Register") Sign In 
 
 
 					.pannel.pannel-default
 						.panel-heading
 							h4.pannel-title New To SHARE? Sign Up
 							
+							if success
+								.success
+									
+							else if errors
+								.errors
+									ul
+										each error in errors
+											li #{error.msg}
+
 							.panel-body
-		
+							
 							form(action = "/insert" method = "post")
 								.row
 									.col-xs-12.col-sm-12.col-md-12
@@ -80,7 +89,7 @@ html(lang = en)
 										.form-group
 											input.form-control.input-sm(type = "password" name = "confirm_password" placeholder = "Confirm Password" required)
 											
-										button.btn.btn-info.btn-block(type = "submit" value = "Register" onclick = "return val();") Sign Up 
+										button.btn.btn-info.btn-block(type = "submit" value = "Register") Sign Up 
 
 							
 						

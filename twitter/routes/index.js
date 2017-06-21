@@ -11,7 +11,7 @@ mongo.connect(url, function(err, db){
 })
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('homepage', { title: 'Form Validation', success: req.session.success, errors: req.session.errors });
+  res.render('homepage', {success: req.session.success, errors: req.session.errors });
   req.session.errors = null;
 });
 
@@ -26,8 +26,10 @@ router.post('/insert', function(req, res, next){
 	if(errors) {
 		req.session.errors = errors;
 		req.session.success = false;
+		res.redirect('/');
 	}else {
 		req.session.success = true;
+		res.render('userpage');
 	}
 
 	
@@ -39,18 +41,7 @@ router.post('/insert', function(req, res, next){
 		//password_confirmation: req.body.confirm_password
 	};
 
-	/*var password = req.body.password;
-	var confirm_password = req.body.confirm_password;
-
-	if (password != confirm_password) {
-		res.redirect('/');
-		res.send("passwords do not match");
-
-	}else{
-		res.render("userpage")
-	}  
-	*/
-
+	
 
 	mongo.connect(url, function(err, db){
 		if(err) throw err
@@ -64,6 +55,7 @@ router.post('/insert', function(req, res, next){
 	})
 
 	res.redirect('/');
+
 });
 
 
