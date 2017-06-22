@@ -31,18 +31,7 @@ html(lang = en)
 								a(href = "#") HOME
 							li
 								a(href = "#") ABOUT
-							li
-								.dropdown
-									a(href = "#").dropdown-toggle(type = "button" data-toggle="dropdown") 
-										.caret
-									ul.dropdown-menu
-										li
-											a(href = "#") sign in
-										li
-											a(href = "#") sign up
-
-
-
+							
 			.container
 				.raw.centered-form
 				.col-xs-12.col-sm-8.col-md-4.col-sm-offset-2.col-md-offset-4
@@ -51,9 +40,10 @@ html(lang = en)
 					.pannel.pannel-default
 						.panel-heading
 							h4.pannel-title Sign In
+
 							.panel-body
 
-							.form(action = "/welcome" method = "post")
+							form(action = "/welcome" method = "post")
 								.row
 									.col-xs-12.col-sm-12.col-md-12
 										.form-group
@@ -102,30 +92,6 @@ html(lang = en)
 										button.btn.btn-info.btn-block(type = "submit" value = "Register") Sign Up 
 
 							
-						
 					
-							
-				
-														
-						
-
-
-
-
-
-
-
-
-
-
-
-
-
-          
-
-						
-					
-							
-				
 														
 						
