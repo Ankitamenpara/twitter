@@ -30,4 +30,23 @@ html(lang = en)
 							li
 								a(href = "#") ABOUT
 
-		h3 Wel Come, #{name}
+			.container
+				.raw.centered-form
+				.col-xs-12.col-sm-8.col-md-4.col-sm-offset-2.col-md-offset-4
+					.pannel.pannel-default
+						.panel-heading
+							h4.pannel-title Wel Come, #{name}
+
+							.panel-body
+
+							form(action = "/share" method = "post")
+								.row
+									.col-xs-12.col-sm-12.col-md-12
+										.form-group
+											
+											textarea(rows = 5, name = "textarea").form-control.input-sm
+
+										button.btn.btn-info.btn-block(type = "submit" value = "Register") Share
+
+										h3 #{share}
+										h3 #{data}

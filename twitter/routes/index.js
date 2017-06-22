@@ -74,4 +74,28 @@ router.post('/welcome', function(req, res, next){
 	
 });
 
+router.post('/share', function(req, res, next){
+	
+		var item = {
+			textarea: req.body.textarea,
+		};
+
+		mongo.connect(url, function(err, db){
+			if(err) throw err
+			
+			db.collection('data').insertOne(item, function(err, result){
+				//res.render('userpage', {share : req.body.textarea});
+			})
+				db.collection('data').find({}).toArray(function(err, result){
+					console.log(result.textarea);
+					res.render('userpage', {data : result.textarea});
+				
+				db.close();
+			})
+		})
+	
+});
+
+
+
 module.exports = router;
