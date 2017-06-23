@@ -58,7 +58,7 @@ router.post('/welcome', function(req, res, next){
 		if(err) throw err
 		
 		db.collection('users').find({first_name : req.body.id , password : req.body.password}).toArray(function(err, result){
-			
+			console.log(result);
 			if(result.length !== 0) {
 				res.render('userpage', {name : (req.body.id).toUpperCase()});
 					
@@ -76,23 +76,26 @@ router.post('/welcome', function(req, res, next){
 
 router.post('/share', function(req, res, next){
 	
-		var item = {
-			textarea: req.body.textarea,
-		};
-
-		mongo.connect(url, function(err, db){
-			if(err) throw err
+	var items = {
 			
-			db.collection('data').insertOne(item, function(err, result){
-				//res.render('userpage', {share : req.body.textarea});
-			})
-				db.collection('data').find({}).toArray(function(err, result){
-					console.log(result.textarea);
-					res.render('userpage', {data : result.textarea});
+		textarea: req.body.textarea
+	};
+	console.log(req.body.textarea);
+
+	mongo.connect(url, function(err, db){
+		if(err) throw err
+			
+			db.collection('data').insertOne(items, function(err, result){
+			})	
+			
+			db.collection('data').find({}, { textarea : 1}).toArray(function(err, results){
+				console.log(results);
+				res.render('userpage', {data : results});
 				
 				db.close();
+
 			})
-		})
+	})
 	
 });
 

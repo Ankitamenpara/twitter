@@ -44,9 +44,13 @@ html(lang = en)
 									.col-xs-12.col-sm-12.col-md-12
 										.form-group
 											
-											textarea(rows = 5, name = "textarea").form-control.input-sm
+											textarea(rows = 4, name = "textarea").form-control.input-sm
 
-										button.btn.btn-info.btn-block(type = "submit" value = "Register") Share
+									.col-xs-3.col-sm-3.col-md-3
+										.form-group
+											button.btn.btn-info.btn-block(type = "submit" value = "Register") Share
 
-										h3 #{share}
-										h3 #{data}
+										
+										if data
+											each row in data
+												h3 #{row.textarea}
