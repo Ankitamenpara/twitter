@@ -21,14 +21,14 @@ router.post('/insert', function(req, res, next){
 	req.check('password','password is invalid').equals(req.body.confirm_password);
 
 	var errors = req.validationErrors();
-	console.log(errors);
+	
 	if(errors) {
 		req.session.errors = errors;
 		req.session.success = false;
 		res.redirect('/');
 	}else {
 		req.session.success = true;
-		res.render('userpage' , {name : (req.body.first_name).toUpperCase()});
+		
 	
 
 		var item = {
@@ -43,11 +43,28 @@ router.post('/insert', function(req, res, next){
 			
 			db.collection('users').insertOne(item, function(err, result){
 				
-				console.log('user inserted');
-
 				db.close();
 			})
 		})
+		var items = {
+			
+					textarea: req.body.textarea
+				};
+				
+				mongo.connect(url, function(err, db){
+					if(err) throw err
+			
+					db.collection('data').insertOne(items, function(err, result){
+					})	
+			
+					db.collection('data').find({}, { textarea : 1}).toArray(function(err, results){
+						
+						res.render('userpage', {name : (req.body.first_name).toUpperCase(), data : results});
+				
+						db.close();
+
+					})
+				})
 	}
 });
 
@@ -58,9 +75,28 @@ router.post('/welcome', function(req, res, next){
 		if(err) throw err
 		
 		db.collection('users').find({first_name : req.body.id , password : req.body.password}).toArray(function(err, result){
-			console.log(result);
+			
 			if(result.length !== 0) {
-				res.render('userpage', {name : (req.body.id).toUpperCase()});
+	
+				var items = {
+					
+					textarea: req.body.textarea
+				};
+				
+				mongo.connect(url, function(err, db){
+					if(err) throw err
+			
+					db.collection('data').insertOne(items, function(err, result){
+					})	
+			
+					db.collection('data').find({}, { textarea : 1}).toArray(function(err, results){
+						
+						res.render('userpage', {name : (req.body.id).toUpperCase(), data : results});
+				
+						db.close();
+
+					})
+				})
 					
 			} else {
 				res.redirect('/');
@@ -80,16 +116,15 @@ router.post('/share', function(req, res, next){
 			
 		textarea: req.body.textarea
 	};
-	console.log(req.body.textarea);
-
+	
 	mongo.connect(url, function(err, db){
 		if(err) throw err
-			
+
 			db.collection('data').insertOne(items, function(err, result){
 			})	
 			
 			db.collection('data').find({}, { textarea : 1}).toArray(function(err, results){
-				console.log(results);
+				
 				res.render('userpage', {data : results});
 				
 				db.close();
