@@ -11,10 +11,52 @@ mongo.connect(url, function(err, db){
 })
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('homepage', {success: req.session.success, errors: req.session.errors });
-  req.session.errors = null;
-});
+	res.render('homepage', {success: req.session.success, errors: req.session.errors });
+  	req.session.errors = null;
 
+  	router.post('/', function(req, res, next){
+	
+		mongo.connect(url, function(err, db){
+			if(err) throw err
+			
+			db.collection('users').find({first_name : req.body.id , password : req.body.password}).toArray(function(err, result){
+				console.log(req.query);
+				if(result.length !== 0) {
+		
+					var items = {
+						
+						textarea: req.body.textarea
+					};
+					
+					mongo.connect(url, function(err, db){
+						if(err) throw err
+				
+						db.collection('data').insertOne(items, function(err, result){
+						})	
+				
+						db.collection('data').find({}, { textarea : 1}).toArray(function(err, results){
+							
+							res.render('userpage', {name : (req.body.id).toUpperCase(), data : results});
+
+
+
+							db.close();
+
+						})
+					})
+						
+				} else {
+					res.redirect('/');
+
+				}
+				
+			});
+
+				db.close();
+		})
+	
+	});
+});
 
 router.post('/insert', function(req, res, next){
 	req.check('email', 'Invalid email address').isEmail();
@@ -68,47 +110,6 @@ router.post('/insert', function(req, res, next){
 	}
 });
 
-
-router.post('/welcome', function(req, res, next){
-	
-	mongo.connect(url, function(err, db){
-		if(err) throw err
-		
-		db.collection('users').find({first_name : req.body.id , password : req.body.password}).toArray(function(err, result){
-			
-			if(result.length !== 0) {
-	
-				var items = {
-					
-					textarea: req.body.textarea
-				};
-				
-				mongo.connect(url, function(err, db){
-					if(err) throw err
-			
-					db.collection('data').insertOne(items, function(err, result){
-					})	
-			
-					db.collection('data').find({}, { textarea : 1}).toArray(function(err, results){
-						
-						res.render('userpage', {name : (req.body.id).toUpperCase(), data : results});
-				
-						db.close();
-
-					})
-				})
-					
-			} else {
-				res.redirect('/');
-
-			}
-			
-		});
-
-			db.close();
-	})
-	
-});
 
 router.post('/share', function(req, res, next){
 	
